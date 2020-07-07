@@ -30,7 +30,7 @@ object FriendsByAge {
   
     // Load each line of the source data into an RDD
     val lines = sc.textFile("../fakefriends.csv")
-    //println(lines.collect().sorted.foreach(println))
+    lines.collect().sorted.foreach(println)
     // Use our parseLines function to convert to (age, numFriends) tuples
     val rdd = lines.map(parseLine)
     // Lots going on here...
@@ -38,8 +38,8 @@ object FriendsByAge {
     // We use mapValues to convert each numFriends value to a tuple of (numFriends, 1)
     // Then we use reduceByKey to sum up the total numFriends and total instances for each age, by
     // adding together all the numFriends values and 1's respectively.
-    //rdd.foreach(println)
-    //rdd.mapValues(x => (x, 1)).foreach(println)
+    rdd.foreach(println)
+    rdd.mapValues(x => (x, 1)).foreach(println)
     val totalsByAge = rdd.mapValues(x => (x, 1)).reduceByKey( (x,y) => (x._1 + y._1, x._2 + y._2))
     
     //totalsByAge.foreach(println)
